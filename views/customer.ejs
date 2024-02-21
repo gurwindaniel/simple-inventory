@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./link.ejs') %>
+
     <title>Customer</title>
 </head>
 <body>
-    <h1>Customer Page</h1>
+    <%- include('./nav.ejs') %>
+    <h1>Dashboard</h1>
+<div class="container">
+    <%- include('./modal.ejs') %>
+    <div id="deletecontainer">
+        
+    </div>
+
+</div>
+    <div class="container">
+        <table id="datatable"></table>
+    </div>
+   
+    <%- include('./tail.ejs') %>
+    <script src="../public/script.js"></script>
 </body>
-</html>
+</html> 

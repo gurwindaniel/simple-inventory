@@ -14,8 +14,7 @@ CREATE TABLE customer(
     cust_date timestamp default current_timestamp
 );
 
-INSERT INTO customer (customer_name,age,email) 
-values ('virat',35,'virat@gmail.com');
+INSERT INTO customer (customer_name,age,email)  values ('virat',35,'virat@gmail.com');
 
 SELECT * FROM customer;
 SELECT customer_name,age FROM customer;
@@ -46,3 +45,42 @@ CREATE TABLE invoice(
     price integer check (price >0),
     inv_date timestamp default current_timestamp
 );
+
+
+
+--update function
+CREATE OR REPLACE FUNCTION updatecust(custid integer,customername varchar(100),ag numeric,eml varchar(100))
+returns integer as
+$$
+DECLARE 
+rec RECORD;    
+BEGIN
+    select customer_id,customer_name,age,email,cust_date into rec from customer where customer_id=custid;
+    if(customername=rec.customer_name and ag=rec.age and eml=rec.email) then
+    return 0;
+    elseif(customername!=rec.customer_name and ag!=rec.age and eml!=rec.email) then
+    update customer set customer_name=customername,age=ag,email=eml,cust_date=current_timestamp where customer_id=custid;
+    elseif(customername!=rec.customer_name and ag!=rec.age) then
+    update customer set customer_name=customername,age=ag,cust_date=current_timestamp where customer_id=custid;
+    elseif(customername!=rec.customer_name and  eml!=rec.email) then
+    update customer set customer_name=customername,email=eml,cust_date=current_timestamp where customer_id=custid;
+    elseif(ag!=rec.age and eml!=rec.email) then
+    update customer set age=ag,email=eml,cust_date=current_timestamp where customer_id=custid;
+    elseif(customername!=rec.customer_name) then
+    update customer set customer_name=customername,cust_date=current_timestamp where customer_id=custid;
+    elseif(ag!=rec.age) then
+    update customer set age=ag,cust_date=current_timestamp where customer_id=custid;
+    elseif(eml!=rec.email) then
+    update customer set email=eml,cust_date=current_timestamp where customer_id=custid;
+    else
+    return 3;
+    end if;
+return 1;
+END;
+$$ language 'plpgsql' STRICT;	
+
+select updatecust(1,'daniel',34,'daniel@gmail.com')
+
+
+
+
