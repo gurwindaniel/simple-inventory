@@ -81,6 +81,44 @@ $$ language 'plpgsql' STRICT;
 
 select updatecust(1,'daniel',34,'daniel@gmail.com')
 
+CREATE TABLE roles(
+    role_id serial primary key,
+    role_name varchar
+);
+
+INSERT INTO roles (role_name) VALUES ('Admin');
+INSERT INTO roles(role_name) VALUES ('Manager');
+
+CREATE TABLE users(
+    user_id serial primary key,
+    name varchar,
+    email varchar,
+    role_id integer references roles(role_id),
+    user_date timestamp default current_timestamp
+);
+alter table users add column password varchar;
+INSERT INTO users (name,email,role_id) values ('virat','virat@gmail.com',1);
+INSERT INTO users (name,email,role_id) values ('gurwin','gurwin@gmail.com',1);
+
+--Duplicate email
+
+CREATE OR REPLACE FUNCTION duplicate_email(eml varchar)
+returns boolean AS $$
+DECLARE
+rec RECORD;
+BEGIN
+   select into rec  * from users where email=eml;
+   if rec is not null then
+   return True;
+   else
+   return false;
+   end if;
+   
+END;
+$$ language 'plpgsql' STRICT;
+
+-- select duplicate_email('virat@gmail.com')
+
 
 
 

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./link.ejs') %>
+
+    <title>Customer</title>
+</head>
+<body>
+    <%- include('./nav.ejs') %>
+    <h1>Dashboard</h1>
+<div class="container">
+    
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Users
+      </button>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/userpost" method="post">
+                    <div class="mb-3">
+                        <label for="userid" class="form-label">User ID</label>
+                        <input type="text" name="user_id" class="form-control" id="userid" >
+                        
+                      </div>
+                      <div class="mb-3">
+                        <label for="nameid" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" id="nameid" >
+                        
+                      </div>
+                    <div class="mb-3">
+                      <label for="emailuserid" class="form-label">User Email</label>
+                      <input type="email"  name="email" class="form-control" id="emailuserid" aria-describedby="emailHelp">
+                      
+                    </div>
+                    <div class="mb-3">
+                        <label for="role_nameid">Role</label>
+                       <select class="selectpicker form-select" name="role_name" id="role_nameid" data-live-search="true" aria-label="Default select example">
+                        <% for(i=0;i < role.length;i++) { %>
+                          <option><%= role[i].role_name %></option>
+                <% } %>
+                          </select>
+    
+                    </div>
+                    <div class="mb-3">
+                      <label for="passwordid" class="form-label">Password</label>
+                      <input type="password" name="password" required class="form-control" id="passwordid" >
+                      
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="usersave" class="btn btn-primary">Save User</button>
+                      </div>
+                    
+                  </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    
+
+</div>
+   
+   
+    <%- include('./tail.ejs') %>
+    <script src="../public/user.js"></script>
+</body>
+</html> 
